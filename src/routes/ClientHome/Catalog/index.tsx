@@ -14,7 +14,8 @@ export default function Catalog() {
 
   useEffect(() => {
    axios.get("http://localhost:8080/products?size=12").then(response => setProducts(response.data.content))
-  }, [])
+  }, []);
+ 
 
   return(
      <main>
