@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './styles.css';
-import * as cartService from '../../../localstorage/cart-repository';
+import * as cartService from '../../../services/cart-service';
 import { OrderDTO } from '../../../models/order';
 import { Link } from 'react-router-dom';
 
@@ -10,9 +10,20 @@ export default function Cart() {
   const [cart, setCart] = useState<OrderDTO>(cartService.get());
 
   function handleClearClick(){
-    cartService.clear();
+    cartService.clearCart
     setCart(cartService.get());
   }
+
+  function handleIncreaseItemClick(productId: number){
+    cartService.increaseItem(productId);
+    setCart(cartService.get());
+  }
+
+  function handleDecreaseItemClick(productId: number){
+    cartService.decreaseItem(productId);
+    setCart(cartService.get());
+  }
+
 
 
     return(
@@ -34,9 +45,9 @@ export default function Cart() {
                      <div className="dsc-cart-item-description">
                        <h3>{x.name}</h3>
                         <div className="dsc-cart-item-quantity-container">
-                          <div className="dsc-cart-item-quantity-btn">-</div>
+                          <div onClick={() => handleDecreaseItemClick(x.productId)} className="dsc-cart-item-quantity-btn">-</div>
                           <p>{x.quantity}</p>
-                          <div className="dsc-cart-item-quantity-btn">+</div>
+                          <div onClick={() => handleIncreaseItemClick(x.productId)} className="dsc-cart-item-quantity-btn">+</div> 
                         </div>
                       </div>
                      </div>
