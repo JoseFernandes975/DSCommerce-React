@@ -32,7 +32,6 @@ export default function ProductDetails(){
       cartService.addProduct(product);
       navigate('/cart');
     }
-      
   }
    
   return(
