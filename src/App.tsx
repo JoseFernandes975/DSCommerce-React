@@ -3,9 +3,17 @@ import Catalog from './routes/ClientHome/Catalog';
 import ClientHome from './routes/ClientHome';
 import ProductDetails from './routes/ClientHome/ProductDetails';
 import Cart from './routes/ClientHome/Cart';
+import { ContextCartCount } from './utils/context-cart';
+import { useState } from 'react';
 
 function App() {
+
+  const [contextCartCount, setContextCartCount] = useState<number>(0);
+
 return(
+  <ContextCartCount.Provider  value={{contextCartCount, setContextCartCount}}>
+
+
     <BrowserRouter>
     <Routes>
      <Route path='/' element={<ClientHome />} >
@@ -18,6 +26,7 @@ return(
  
     </Routes>
     </BrowserRouter>
+    </ContextCartCount.Provider>
 );
 }
 
