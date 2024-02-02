@@ -4,7 +4,6 @@ import * as authService from '../../../services/auth-service';
 import { CredentialsDTO } from '../../../models/auth';
 import { useState } from 'react';
 
-
 export default function Login(){
 
   const [formData, setFormData] = useState<CredentialsDTO>({
@@ -12,12 +11,13 @@ export default function Login(){
     password: ""
   });
 
-  function handleSubmit(event: any){
+  function handleSubmit(event: any) {
    event.preventDefault();
    authService.loginRequest(formData).then(response => {
-    console.log(response.data);
+     authService.saveAccessToken(response.data.access_token);
    }).catch(error => {
       console.log("Erro no login", error);
+      authService.logout();
    })
   }
 
