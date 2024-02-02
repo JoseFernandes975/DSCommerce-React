@@ -17,7 +17,6 @@ export default function Login(){
      authService.saveAccessToken(response.data.access_token);
    }).catch(error => {
       console.log("Erro no login", error);
-      authService.logout();
    })
   }
 
