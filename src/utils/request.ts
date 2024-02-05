@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "./system";
 import * as authService from '../services/auth-service';
+import { history } from './history';
 
 export function requestBackend(config: AxiosRequestConfig) {
 
@@ -14,3 +15,20 @@ export function requestBackend(config: AxiosRequestConfig) {
 
  return axios({...config, baseURL: BASE_URL, headers: headers});
 }
+
+
+axios.interceptors.response.use(
+    function (response) {
+        // DO SOMETHING WITH RESPONSE DATA IF STATUS IS 2xx
+        return response;
+        },
+        function (error) {
+        if(error.response.status === 401){
+            history.push("/login");
+        }
+        if(error.response.status === 403){
+           history.push("/catalog");
+        }
+        return Promise.reject(error);
+        }
+ );
