@@ -5,7 +5,6 @@ import CatalogCard from '../../../components/CatalogCard';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
 import * as productService from '../../../services/product-service'
-import { isAutheticated } from '../../../services/auth-service';
 
 type QueryParams = {
   page: number;
