@@ -4,9 +4,9 @@ import { RoleEnum } from '../../models/auth';
 
 type Props = {
     children: JSX.Element;
-    roles: RoleEnum[]
+    roles?: RoleEnum[]
     }
-    export function PrivateRoute({ children, roles }: Props) {
+    export function PrivateRoute({ children, roles = [] }: Props) {
     if (!authService.isAuthenticated()) {
     return <Navigate to="/login" />;
     }

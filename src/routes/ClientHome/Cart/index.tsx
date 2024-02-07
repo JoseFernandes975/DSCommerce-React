@@ -38,7 +38,7 @@ export default function Cart() {
         <section id="cart-container-section" className="dsc-container">
 
         {
-          cart.items.length === 0
+          cart.items.length === 0 
           ? ( <div><h2 className='dsc-section-title dsc-mb20'>Seu carrinho está vazio!</h2></div> )
           : (
 
