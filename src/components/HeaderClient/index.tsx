@@ -5,6 +5,7 @@ import * as authService from '../../services/auth-service';
 import iconAdmin from '../../assets/Admin.svg';
 import { useContext } from 'react';
 import { ContextToken } from '../../utils/context-token';
+import LoggedUser from '../LoggedUser';
 
 function HeaderClient() {
 
@@ -34,9 +35,7 @@ return(
             </div>
           </Link>
           </div>
-          <Link to="/login">
-          Entrar
-          </Link>
+         <LoggedUser />
           
         </div>
       </nav>
