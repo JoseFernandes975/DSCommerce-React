@@ -12,7 +12,7 @@ export default function Confirmation() {
     const [order, setOrder] = useState<OrderDTO>();
 
     useEffect(() => {
-     orderService.findByIdRequest(Number(params.orderId)).then( response => {
+     orderService.findByIdRequest(Number(params.orderId)).then(response => {
         setOrder(response.data);
      })
     }, [])
