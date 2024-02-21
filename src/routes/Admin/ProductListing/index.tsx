@@ -8,6 +8,7 @@ import { ProductDTO } from '../../../models/product';
 import SearchBar from '../../../components/SearchBar';
 import ButtonNextPage from '../../../components/ButtonNextPage';
 import DialogInfo from '../../../components/DialogInfo';
+import DialogConfirmation from '../../../components/DialogConfirmation';
 
 type QueryParams = {
  page: number,
@@ -28,6 +29,11 @@ export default function ProductListing(){
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
     message: "Operação com sucesso!"
+  });
+
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    visible: false,
+    message: "Tem certeza?"
   });
 
   useEffect(() => {
@@ -52,9 +58,15 @@ export default function ProductListing(){
     setDialogInfoData({ ...dialogInfoData, visible: false});
   }
 
-  function handleShowDialogInfo(){
-    setDialogInfoData({ ...dialogInfoData, visible: true});
+  function handleDeleteClick(){
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: true});
   }
+
+  function handleDialogConfirmationAnswer(result: boolean){
+    console.log("Resposta: " + result);
+  }
+
+
   
 
     return(
@@ -88,7 +100,7 @@ export default function ProductListing(){
                   <td className="dsc-tb768">R$ {x.price.toFixed(2)}</td>
                   <td className="dsc-txt-left">{x.name}</td>
                   <td><img className="dsc-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                  <td><img onClick={handleShowDialogInfo} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
+                  <td><img onClick={handleDeleteClick} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
                 </tr>
                 ))
               }
@@ -108,7 +120,11 @@ export default function ProductListing(){
           &&
           <DialogInfo message={dialogInfoData.message} onDialogClose={handleCloseDialog} />
         }
-        
+        {
+          dialogConfirmationData.visible
+          &&
+          <DialogConfirmation message={dialogConfirmationData.message} onDialogAnswer={handleDialogConfirmationAnswer} />
+        }
       </main>
     );
 }

@@ -3,6 +3,7 @@ import './styles.css';
 
 type Props = {
     message: string;
+    // eslint-disable-next-line @typescript-eslint/ban-types
     onDialogClose: Function
 }
 
