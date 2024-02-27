@@ -11,3 +11,15 @@ export function toValues(inputs: any){
   }
   return data;
 }
+
+export function updateAll(inputs: any, newValue: any){
+  //objeto vazio
+  const newInput :any = {};
+
+  //percorrer todos os atributos dos inputs
+  // conservar tudo do atributo, pegar o valor do atributo e passar o novo valor
+  for(var name in inputs){
+    newInput[name] = {...inputs[name], value: newValue[name]};
+  }
+  return newInput;
+}
