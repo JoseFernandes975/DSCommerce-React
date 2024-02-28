@@ -13,25 +13,29 @@ export default function ProductForm(){
 
   const [formData, setFormData] = useState<any>({
     name: {
+      value: "",
       id: "name",
       name: "name",
       type: "text",
-      placeholder: "Nome",
-      value: ""
+      placeholder: "Nome"
     },
     price: {
+      value: 0,
       id: "price",
       name: "price",
       type: "number",
       placeholder: "Preço",
-      value: ""
+      validation: function(value: any) {
+        return Number(value) > 0;
+      },
+      message: "Informe um preço positivo"
     },
     imgUrl: {
+      value: "",
       id: "imgUrl",
       name: "imgUrl",
       type: "text",
-      placeholder: "Imagem",
-      value: ""
+      placeholder: "Imagem"
     }
   });
 
@@ -42,6 +46,10 @@ export default function ProductForm(){
   }
 
   useEffect(() => {
+   
+   const newObj = forms.validate(formData, "price");
+   console.log(newObj);
+
     if(isEditing){
       productServices.findById(Number(params.productId)).then(response => {
         const newFormData = forms.updateAll(formData, response.data);
