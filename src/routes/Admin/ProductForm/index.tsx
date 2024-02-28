@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from 'react-router-dom';
 import './styles.css';
 import { useEffect, useState } from 'react';
@@ -42,7 +43,9 @@ export default function ProductForm(){
   function handleInputChange(event: any) {
     const value = event.target.value;
     const name = event.target.name;
-    setFormData(forms.update(formData, name, value));
+    const formUpdate = forms.update(formData, name, value);
+    const formValidate = forms.validate(formUpdate, name);
+    setFormData(formValidate);
   }
 
   useEffect(() => {
@@ -66,10 +69,11 @@ export default function ProductForm(){
             <h2>Dados do produto</h2>
             <div className="dsc-form-controls-container">
               <div>
-                <FormInput { ...formData.name } className="dsc-form-control" onChange={handleInputChange}  />
+                <FormInput { ...formData.name } className="dsc-form-control " onChange={handleInputChange}  />
               </div>
               <div>
               <FormInput { ...formData.price } className="dsc-form-control" onChange={handleInputChange} />
+              <div className='dsc-form-error'>{formData.price.message}</div>
               </div>
               <div>
               <FormInput { ...formData.imgUrl } className="dsc-form-control" onChange={handleInputChange} />
