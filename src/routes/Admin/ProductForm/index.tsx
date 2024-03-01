@@ -18,7 +18,11 @@ export default function ProductForm(){
       id: "name",
       name: "name",
       type: "text",
-      placeholder: "Nome"
+      placeholder: "Nome",
+      validation: function(value: string){
+        return /^.{3,80}/.test(value);
+      }, 
+      message: "Favor informar um nome de 3 a 80 caracteres"
     },
     price: {
       value: "",
@@ -70,7 +74,8 @@ export default function ProductForm(){
             <h2>Dados do produto</h2>
             <div className="dsc-form-controls-container">
               <div>
-                <FormInput { ...formData.name } className="dsc-form-control " onChange={handleInputChange} onTurnDirty={handleTurnDirty}  />
+                <FormInput { ...formData.name } className="dsc-form-control" onChange={handleInputChange} onTurnDirty={handleTurnDirty}  />
+                <div className='dsc-form-error'>{formData.name.message}</div>
               </div>
               <div>
               <FormInput { ...formData.price } className="dsc-form-control" onChange={handleInputChange} onTurnDirty={handleTurnDirty} />

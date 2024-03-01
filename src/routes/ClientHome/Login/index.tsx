@@ -22,6 +22,9 @@ export default function Login(){
      name: "username",
      type: "text",
      placeholder: "Email",
+     validation: function(value: string){
+      return  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+     },
      message: "Favor informar um email válido",
     },
     password: {
@@ -53,7 +56,7 @@ export default function Login(){
   }
 
   function handleTurnDirty(name: string){
-    const newFormData = forms.toDirty(formData, name);  
+    const newFormData = forms.dirtyAndValidate(formData, name);  
     setFormData(newFormData);
   }
 
@@ -66,7 +69,7 @@ export default function Login(){
               <div className="dsc-form-controls-container">
                 <div>
                   <FormInput { ...formData.username } className="dsc-form-control" onChange={handleInputChange} onTurnDirty={handleTurnDirty} />
-                  <div className="dsc-form-error"></div>
+                  <div className="dsc-form-error">{formData.username.message}</div>
                 </div>
                 <div>
                   <FormInput { ...formData.password } className="dsc-form-control" onChange={handleInputChange}  onTurnDirty={handleTurnDirty} />
