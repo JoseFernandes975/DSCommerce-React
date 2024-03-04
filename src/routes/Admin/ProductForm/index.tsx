@@ -6,9 +6,9 @@ import FormInput from '../../../components/FormInput';
 import * as forms from '../../../utils/forms';
 import * as productServices from '../../../services/product-service';
 import FormTextArea from '../../../components/FormTextArea';
-import Select from 'react-select';
 import { CategoryDTO } from '../../../models/category';
 import * as categoryService from '../../../services/category-service';
+import FormSelect from '../../../components/FormSelect';
 
 export default function ProductForm(){
 
@@ -58,6 +58,16 @@ export default function ProductForm(){
         return /^.{10,}/.test(value);
       }, 
       message: "Favor informar uma descrição de pelo menos 10 caracteres"
+    },
+    categories: {
+      value: [],
+      id: "categoties",
+      name: "categories",
+      placeholder: "Categorias",
+      validation: function(value: CategoryDTO[]){
+        return value.length > 0;
+      },
+      message: "Escolha ao menos uma categoria"
     }
   });
 
@@ -116,10 +126,15 @@ export default function ProductForm(){
               <FormInput { ...formData.imgUrl } className="dsc-form-control" onChange={handleInputChange} onTurnDirty={handleTurnDirty} />
               </div>
               <div>
-               <Select options={categories} isMulti getOptionLabel={(obj) => obj.name} getOptionValue={(obj) => String(obj.id)} />
+               <FormSelect {...formData.categories} className="dsc-form-control" options={categories} onChange={(obj: any) => {
+                const newFormData = forms.updateAndValidate(formData, "categories", obj);
+                 setFormData(newFormData);
+                }}  onTurnDirty={handleTurnDirty} isMulti getOptionLabel={(obj: any) => obj.name} getOptionValue={(obj: any) => String(obj.id)} />
+                <div className='dsc-form-error'>{formData.categories.message}</div>
               </div>
+              
               <div>
-                <FormTextArea { ...formData.description} className="dsc-form-control dsc-textarea" onChange={handleInputChange} onTurnDirty={handleTurnDirty} />
+                <FormTextArea {...formData.description} className="dsc-form-control dsc-textarea" onChange={handleInputChange} onTurnDirty={handleTurnDirty} />
                 <div className='dsc-form-error'>{formData.description.message}</div>
               </div>
               
