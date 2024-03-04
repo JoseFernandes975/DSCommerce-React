@@ -9,6 +9,7 @@ import FormTextArea from '../../../components/FormTextArea';
 import { CategoryDTO } from '../../../models/category';
 import * as categoryService from '../../../services/category-service';
 import FormSelect from '../../../components/FormSelect';
+import { selectStyles } from '../../../utils/select';
 
 export default function ProductForm(){
 
@@ -61,7 +62,7 @@ export default function ProductForm(){
     },
     categories: {
       value: [],
-      id: "categoties",
+      id: "categories",
       name: "categories",
       placeholder: "Categorias",
       validation: function(value: CategoryDTO[]){
@@ -126,7 +127,9 @@ export default function ProductForm(){
               <FormInput { ...formData.imgUrl } className="dsc-form-control" onChange={handleInputChange} onTurnDirty={handleTurnDirty} />
               </div>
               <div>
-               <FormSelect {...formData.categories} className="dsc-form-control" options={categories} onChange={(obj: any) => {
+               <FormSelect {...formData.categories} className="dsc-form-control dsc-form-select-container"
+                styles={selectStyles}
+                options={categories} onChange={(obj: any) => {
                 const newFormData = forms.updateAndValidate(formData, "categories", obj);
                  setFormData(newFormData);
                 }}  onTurnDirty={handleTurnDirty} isMulti getOptionLabel={(obj: any) => obj.name} getOptionValue={(obj: any) => String(obj.id)} />
