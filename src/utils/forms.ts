@@ -50,3 +50,43 @@ export function dirtyAndValidate(inputs: any, name: string){
   const dataDirty = toDirty(inputs, name);
   return validate(dataDirty, name);
 }
+
+export function toDirtyAll(inputs: any){
+ const newInputs: any = {};
+ for(var name in inputs){
+  newInputs[name] = { ...inputs[name], dirty: "true"};
+ }
+ return newInputs;
+}
+
+export function validateAll(inputs: any){
+  const newInputs: any = {};
+
+  for(var name in inputs){
+    if(inputs[name].validation){
+      const isInvalid = !inputs[name].validation(inputs[name].value)
+      newInputs[name] = { ...inputs[name], invalid: isInvalid.toString() }
+    }
+    else {
+      newInputs[name] = { ...inputs[name] }
+    }
+  }
+  return newInputs;
+}
+
+//função para verificar quando enviar formulario vazio
+export function dirtyAndValidateAll(inputs: any){
+
+  //sujar todos os campos e o resultado vai passar para validar todos esses campos
+  return validateAll(toDirtyAll(inputs));
+}
+
+//verifico se tem algum campo invalido
+export function hasAnyInvalid(inputs: any){
+  for(var name in inputs){
+    if(inputs[name].invalid === "true" && inputs[name].dirty === "true"){
+      return true;
+    }
+    }
+    return false;
+}

@@ -72,6 +72,10 @@ export default function ProductListing(){
     console.log("Id do Produto: " + productId);
   }
 
+  function handleUpdateClick(productId: number){
+    navigate(`/admin/products/${productId}`);
+  }
+
   function handleDialogConfirmationAnswer(result: boolean, productId: number){
     if(result === true){
       productService.deleteById(productId).then(() => {
@@ -119,7 +123,7 @@ export default function ProductListing(){
                   <td><img className="dsc-product-listing-image" src={x.imgUrl} alt={x.name} /></td>
                   <td className="dsc-tb768">R$ {x.price.toFixed(2)}</td>
                   <td className="dsc-txt-left">{x.name}</td>
-                  <td><img className="dsc-product-listing-btn" src={editIcon} alt="Editar" /></td>
+                  <td><img onClick={() => handleUpdateClick(x.id)} className="dsc-product-listing-btn" src={editIcon} alt="Editar" /></td>
                   <td><img onClick={() => handleDeleteClick(x.id)} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
                 </tr>
                 ))
