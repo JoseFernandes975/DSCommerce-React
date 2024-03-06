@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 import { useEffect, useState } from 'react';
 import FormInput from '../../../components/FormInput';
@@ -14,6 +14,8 @@ import { selectStyles } from '../../../utils/select';
 export default function ProductForm(){
 
   const params = useParams();
+
+  const navigate = useNavigate();
   
   const isEditing = params.productId !== 'create';
 
@@ -108,8 +110,23 @@ export default function ProductForm(){
     const formDataValidated = forms.dirtyAndValidateAll(formData);
     if(forms.hasAnyInvalid(formDataValidated)){
       setFormData(formDataValidated);
-      return;
+      return; //paro o submit
     }
+
+    const requestBody = forms.toValues(formData);
+
+    if(isEditing){
+      requestBody.id = params.productId;
+    }
+
+    //se isEditing for true, faço a requisição de update, se não, insiro um novo produto
+    const request = isEditing
+    ? productServices.updateRequest(requestBody)
+    : productServices.insertRequest(requestBody);
+
+    request.then(() => {
+      navigate("/admin/products");
+    })
   }
 
     return(
