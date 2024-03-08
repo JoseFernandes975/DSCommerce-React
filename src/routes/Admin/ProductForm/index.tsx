@@ -119,14 +119,19 @@ export default function ProductForm(){
       requestBody.id = params.productId;
     }
 
-    //se isEditing for true, faço a requisição de update, se não, insiro um novo produto
+    //se isEditing for true,   faço a requisição de update, se não, insiro um novo produto
     const request = isEditing
     ? productServices.updateRequest(requestBody)
     : productServices.insertRequest(requestBody);
 
     request.then(() => {
       navigate("/admin/products");
-    })
+    }).catch(error => {
+     const newFormData = forms.setBackendErrors(formData, error.response.data.errors);
+     setFormData(newFormData);
+    });
+  
+
   }
 
     return(
