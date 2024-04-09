@@ -53,7 +53,7 @@ export default function Login(){
      authService.saveAccessToken(response.data.access_token);
      navigate("/cart");
      setContextTokenPayload(authService.getAccessTokenPayload());
-   }).catch(error => {
+   }).catch(() => {
       setSubmitResponseFail(true);
    })
   }
